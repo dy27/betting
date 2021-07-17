@@ -59,25 +59,22 @@ def ladbrokes_races_get_bet_map(driver, link):
 			print('no names: skipping')
 			continue
 		name = name_elems[0].text
-		odds_box_elems = row.find_elements_by_class_name("runner-fixed-odds")
-		if len(odds_box_elems) == 0:
-			print('no odds: skipping')
+		odds_box_elems = row.find_elements_by_class_name("price-button-odds-price")
+		odds = [float(x.text) for x in odds_box_elems]
+		if len(odds) == 0:
 			continue
-		odds_box = odds_box_elems[0]
-		odds = odds_box.find_elements_by_class_name("price-button-odds-price")
-		odds = [float(x.text) for x in odds]
-		print(name, odds)
-
+		print((name, odds))
 		bet_map[name] = odds
 
 
 
 
 
-driver = webdriver.Firefox()
+
+driver = webdriver.Chrome(executable_path=r'C:\Users\Thejan Elankayer\Documents\General\betting\chromedriver.exe')
 driver.implicitly_wait(1)
 
-link = "https://www.ladbrokes.com.au/racing/cranbourne/cd37e2e9-67f1-451a-b800-e278807fc7b6"
+link = "https://www.ladbrokes.com.au/racing/lismore/973c767f-1645-4b04-99d4-3839531a79a1"
 
 driver.get(link)
 
